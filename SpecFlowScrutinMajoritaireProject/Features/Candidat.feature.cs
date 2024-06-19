@@ -19,7 +19,7 @@ namespace SpecFlowScrutinMajoritaireProject.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class ScrutinFeature : object, Xunit.IClassFixture<ScrutinFeature.FixtureData>, System.IDisposable
+    public partial class CandidatFeature : object, Xunit.IClassFixture<CandidatFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace SpecFlowScrutinMajoritaireProject.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "Scrutin.feature"
+#line 1 "Candidat.feature"
 #line hidden
         
-        public ScrutinFeature(ScrutinFeature.FixtureData fixtureData, SpecFlowScrutinMajoritaireProject_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public CandidatFeature(CandidatFeature.FixtureData fixtureData, SpecFlowScrutinMajoritaireProject_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace SpecFlowScrutinMajoritaireProject.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Scrutin", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Candidat", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,14 +80,14 @@ namespace SpecFlowScrutinMajoritaireProject.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Vérifier si le scrutin non clôturé")]
-        [Xunit.TraitAttribute("FeatureTitle", "Scrutin")]
-        [Xunit.TraitAttribute("Description", "Vérifier si le scrutin non clôturé")]
-        public virtual void VerifierSiLeScrutinNonCloture()
+        [Xunit.SkippableFactAttribute(DisplayName="Créer un candidat")]
+        [Xunit.TraitAttribute("FeatureTitle", "Candidat")]
+        [Xunit.TraitAttribute("Description", "Créer un candidat")]
+        public virtual void CreerUnCandidat()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Vérifier si le scrutin non clôturé", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Créer un candidat", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 3
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -109,28 +109,45 @@ namespace SpecFlowScrutinMajoritaireProject.Features
             {
                 this.ScenarioStart();
 #line 4
-        testRunner.Given("un scrutin avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+        testRunner.Given("je n\'ai aucun candidat", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Id",
+                            "Nom"});
+                table1.AddRow(new string[] {
+                            "1",
+                            "Candidat 1"});
+                table1.AddRow(new string[] {
+                            "2",
+                            "Candidat 2"});
+                table1.AddRow(new string[] {
+                            "3",
+                            "Candidat 3"});
 #line 5
-        testRunner.When("je consulte l\'état de clôture du scrutin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+        testRunner.When("j\'ajoute un candidat avec les informations suivantes :", ((string)(null)), table1, "When ");
 #line hidden
-#line 6
-        testRunner.Then("le statut de clôture du scrutin devrait être false (false = non clôturé | true = " +
-                        "clôturé)", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 10
+        testRunner.Then("le candidat avec l\'identifiant 1 devrait avoir le nom \"Candidat 1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 11
+        testRunner.And("le candidat avec l\'identifiant 2 devrait avoir le nom \"Candidat 2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 12
+        testRunner.And("le candidat avec l\'identifiant 3 devrait avoir le nom \"Candidat 3\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Un candidat obtient plus de 50% des voix")]
-        [Xunit.TraitAttribute("FeatureTitle", "Scrutin")]
-        [Xunit.TraitAttribute("Description", "Un candidat obtient plus de 50% des voix")]
-        public virtual void UnCandidatObtientPlusDe50DesVoix()
+        [Xunit.SkippableFactAttribute(DisplayName="Recevoir un vote pour le candidat")]
+        [Xunit.TraitAttribute("FeatureTitle", "Candidat")]
+        [Xunit.TraitAttribute("Description", "Recevoir un vote pour le candidat")]
+        public virtual void RecevoirUnVotePourLeCandidat()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Un candidat obtient plus de 50% des voix", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 8
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Recevoir un vote pour le candidat", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 14
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -150,27 +167,14 @@ namespace SpecFlowScrutinMajoritaireProject.Features
             else
             {
                 this.ScenarioStart();
-#line 9
-        testRunner.Given("un scrutin avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 10
-        testRunner.And("un candidat avec l\'identifiant 1 et le nom \"Candidat 1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 11
-        testRunner.And("un candidat avec l\'identifiant 2 et le nom \"Candidat 2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 12
-        testRunner.When("vote 30 fois pour le candidat avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 13
-        testRunner.And("vote 20 fois pour le candidat avec l\'identifiant 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 14
-        testRunner.And("je clôture le scrutin avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
 #line 15
-        testRunner.Then("le vainqueur du scrutin avec l\'identifiant 1 devrait être \"Candidat 1\" avec ident" +
-                        "ifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        testRunner.Given("j\'ai un candidat avec l\'identifiant 1 et le nom \"Candidat 1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 16
+        testRunner.When("je vote le candidat avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 17
+        testRunner.Then("j\'ai incrimenté le nombre de vote du candidat avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -183,12 +187,12 @@ namespace SpecFlowScrutinMajoritaireProject.Features
             
             public FixtureData()
             {
-                ScrutinFeature.FeatureSetup();
+                CandidatFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                ScrutinFeature.FeatureTearDown();
+                CandidatFeature.FeatureTearDown();
             }
         }
     }

@@ -22,7 +22,7 @@ public class Scrutin
         var candidat = Candidats.FirstOrDefault(c => c.Id == candidatId);
         if (candidat != null)
         {
-            candidat.NombreDeVoix++;
+            candidat.RecevoirVoix();
         }
     }
 
