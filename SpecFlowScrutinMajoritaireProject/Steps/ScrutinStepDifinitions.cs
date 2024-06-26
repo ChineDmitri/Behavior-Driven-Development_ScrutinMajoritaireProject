@@ -1,12 +1,13 @@
+using System.Text;
 using FluentAssertions;
 using ScrutinMajoritaireProject;
+using Xunit;
 
 namespace SpecFlowScrutinMajoritaireProject.Steps;
 
 [Binding]
 public class ScrutinStepDifinitions
 {
-    
     private Scrutin _scrutin;
     private bool _estCloture;
     private Candidat _vainqueur;
@@ -22,17 +23,17 @@ public class ScrutinStepDifinitions
     {
         _estCloture = _scrutin.estCloture;
     }
-    
+
     [Then(@"le statut de clôture du scrutin devrait être (.*) \(false = non clôturé \| true = clôturé\)")]
     public void ThenLeStatutDeClotureDuScrutinDevraitEtreFalseFalseNonClotureTrueCloture(bool statutDeCloture)
     {
         this._estCloture.Should().Be(statutDeCloture);
     }
 
-    [Given(@"un candidat avec l'identifiant (.*) et le nom ""(.*)""")]
-    public void GivenUnCandidatAvecLidentifiantEtLeNom(int idCandidat, string nomCandidat)
+    [Given(@"un candidat avec l'identifiant (.*) et le nom ""(.*)"" et la date d'enregistrement (.*)")]
+    public void GivenUnCandidatAvecLidentifiantEtLeNom(int idCandidat, string nomCandidat, String dateEnregistrement)
     {
-        var candidat = new Candidat(idCandidat, nomCandidat);
+        var candidat = new Candidat(idCandidat, nomCandidat, DateTime.Parse(dateEnregistrement));
         _scrutin.AjouterCandidat(candidat);
     }
 
@@ -49,13 +50,60 @@ public class ScrutinStepDifinitions
     public void WhenJeClotureLeScrutinAvecLidentifiant(int idScrutin)
     {
         _scrutin.estCloture = true;
-        _vainqueur = _scrutin.ObtenirVainqueur();
     }
 
     [Then(@"le vainqueur du scrutin avec l'identifiant (.*) devrait être ""(.*)"" avec identifiant (.*)")]
     public void ThenLeVainqueurDuScrutinAvecLidentifiantDevraitEtre(int idScrutin, string nomCandidat, int idCandidat)
     {
-        _vainqueur.Nom.Should().Be(nomCandidat);
-        _vainqueur.Id.Should().Be(idCandidat);
+        List<Candidat> _vainqueur = _scrutin.ObtenirVainqueur();
+        _vainqueur.Count.Should().Be(1);
+        _vainqueur[0].Nom.Should().Be(nomCandidat);
+        _vainqueur[0].Id.Should().Be(idCandidat);
+    }
+
+    [Then(
+        @"les résultats du scrutin avec l'identifiant (.*) devraient être ""(.*)"" avec (.*)% des voix et ""(.*)"" avec (.*)% des voix")]
+    public void ThenLesResultatsDuScrutinAvecLidentifiantDevraientEtreAvecDesVoixEtAvecDesVoix(
+        int idScrutin,
+        string nomCandidat1, double pCandidat1,
+        string nomCandidat2, double pCandidat2)
+    {
+        _scrutin.Candidats.Count.Should().Be(2);
+
+        Dictionary<Candidat, double> resultats = _scrutin.Resultats();
+
+        var candidat1Obj = _scrutin.Candidats.FirstOrDefault(c => c.Nom == nomCandidat1);
+        var candidat2Obj = _scrutin.Candidats.FirstOrDefault(c => c.Nom == nomCandidat2);
+
+        resultats[candidat1Obj].Should().Be(pCandidat1);
+        resultats[candidat2Obj].Should().Be(pCandidat2);
+    }
+
+    [Then(@"afficher les resultat ""(.*)""")]
+    public void ThenAfficherLesResultat(String expectedResult)
+    {
+        StringWriter output = new StringWriter();
+        Console.SetOut(output);
+        _scrutin.afficherResultat();
+
+        string actualOutput = output.ToString().Replace("\n", "\\n");
+        expectedResult = expectedResult.Replace("\n", "\\n");
+
+        byte[] expectedBytes = Encoding.UTF8.GetBytes(expectedResult);
+        byte[] actualBytes = Encoding.UTF8.GetBytes(actualOutput);
+
+        Assert.Equal(expectedResult, actualOutput);
+    }
+
+    [Then(
+        @"nous avons pas de candidat avec plus de 50% des voix les candidats pour second tour sont ""(.*)"" et ""(.*)""")]
+    public void ThenNousAvonsPasDeCandidatAvecPlusDeDesVoixLesCandidatsPourSecondTourSontEt(
+        string nomCandidat1,
+        string nomCandidat2)
+    {
+        List<Candidat> _vainqueur = _scrutin.ObtenirVainqueur();
+        _vainqueur.Count.Should().Be(2);
+        _vainqueur[0].Nom.Should().Be(nomCandidat1);
+        _vainqueur[1].Nom.Should().Be(nomCandidat2);
     }
 }

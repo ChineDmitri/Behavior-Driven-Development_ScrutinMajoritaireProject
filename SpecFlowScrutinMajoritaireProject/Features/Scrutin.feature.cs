@@ -154,10 +154,12 @@ namespace SpecFlowScrutinMajoritaireProject.Features
         testRunner.Given("un scrutin avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 10
-        testRunner.And("un candidat avec l\'identifiant 1 et le nom \"Candidat 1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.And("un candidat avec l\'identifiant 1 et le nom \"Candidat 1\" et la date d\'enregistreme" +
+                        "nt 2022-01-01 12:00:00 PM", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 11
-        testRunner.And("un candidat avec l\'identifiant 2 et le nom \"Candidat 2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.And("un candidat avec l\'identifiant 2 et le nom \"Candidat 2\" et la date d\'enregistreme" +
+                        "nt 2022-01-01 12:01:00 PM", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 12
         testRunner.When("vote 30 fois pour le candidat avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -171,6 +173,125 @@ namespace SpecFlowScrutinMajoritaireProject.Features
 #line 15
         testRunner.Then("le vainqueur du scrutin avec l\'identifiant 1 devrait être \"Candidat 1\" avec ident" +
                         "ifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Obtenir et afficher les résultats du scrutin")]
+        [Xunit.TraitAttribute("FeatureTitle", "Scrutin")]
+        [Xunit.TraitAttribute("Description", "Obtenir et afficher les résultats du scrutin")]
+        public virtual void ObtenirEtAfficherLesResultatsDuScrutin()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Obtenir et afficher les résultats du scrutin", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 17
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 18
+        testRunner.Given("un scrutin avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 19
+        testRunner.And("un candidat avec l\'identifiant 1 et le nom \"Candidat 1\" et la date d\'enregistreme" +
+                        "nt 2022-01-01 12:00:00 PM", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 20
+        testRunner.And("un candidat avec l\'identifiant 2 et le nom \"Candidat 2\" et la date d\'enregistreme" +
+                        "nt 2022-01-01 12:01:00 PM", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 21
+        testRunner.When("vote 22 fois pour le candidat avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 22
+        testRunner.And("vote 1 fois pour le candidat avec l\'identifiant 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 23
+        testRunner.Then("les résultats du scrutin avec l\'identifiant 1 devraient être \"Candidat 1\" avec 95" +
+                        ".65% des voix et \"Candidat 2\" avec 4.35% des voix", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 24
+        testRunner.And("afficher les resultat \"Candidat 1 : 95.65%\\nCandidat 2 : 4.35%\\n\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Nous avons pas de candidat avec plus de 50% des voix")]
+        [Xunit.TraitAttribute("FeatureTitle", "Scrutin")]
+        [Xunit.TraitAttribute("Description", "Nous avons pas de candidat avec plus de 50% des voix")]
+        public virtual void NousAvonsPasDeCandidatAvecPlusDe50DesVoix()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Nous avons pas de candidat avec plus de 50% des voix", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 26
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 27
+        testRunner.Given("un scrutin avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 28
+        testRunner.And("un candidat avec l\'identifiant 1 et le nom \"Candidat 1\" et la date d\'enregistreme" +
+                        "nt 2022-01-01 12:00:00 PM", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 29
+        testRunner.And("un candidat avec l\'identifiant 2 et le nom \"Candidat 2\" et la date d\'enregistreme" +
+                        "nt 2022-01-01 12:02:00 PM", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 30
+        testRunner.And("un candidat avec l\'identifiant 3 et le nom \"Candidat 3\" et la date d\'enregistreme" +
+                        "nt 2022-01-01 12:03:00 PM", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 31
+        testRunner.When("vote 25 fois pour le candidat avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 32
+        testRunner.And("vote 30 fois pour le candidat avec l\'identifiant 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 33
+        testRunner.And("vote 25 fois pour le candidat avec l\'identifiant 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 34
+        testRunner.And("je clôture le scrutin avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 35
+        testRunner.Then("nous avons pas de candidat avec plus de 50% des voix les candidats pour second to" +
+                        "ur sont \"Candidat 2\" et \"Candidat 1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

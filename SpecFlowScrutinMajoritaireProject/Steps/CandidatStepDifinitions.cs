@@ -22,22 +22,24 @@ public class CandidatStepDifinitions
         {
             int id = int.Parse(row["Id"]);
             string nom = row["Nom"];
-            var candidat = new Candidat(id, nom);
+            DateTime dateEnregistrement = DateTime.Parse(row["DateEnregistrement"]);
+            var candidat = new Candidat(id, nom, dateEnregistrement);
             candidat.Id.Should().Be(id);
             candidat.Nom.Should().Be(nom);
 
-            _candidats.Append(candidat);
+            _candidats.Add(candidat);
         }
+        
+        _candidats.Count.Should().Be(table.RowCount);
     }
 
-    [Then(@"le candidat avec l'identifiant (.*) devrait avoir le nom ""(.*)""")]
-    public void ThenLeCandidatAvecLidentifiantDevraitAvoirLeNom(int id, string nom)
+    [Then(@"le candidat avec l'identifiant (.*) devrait avoir le nom ""(.*)"" et la date d'enregistrement (.*)")]
+    public void ThenLeCandidatAvecLidentifiantDevraitAvoirLeNom(int id, string nom, string dateEnregistrement)
     {
         var candidat = _candidats.FirstOrDefault(c => c.Id == id);
-        if (candidat != null)
-        {
-            candidat.Nom.Should().BeEquivalentTo(nom);
-        }
+        candidat.Should().NotBeNull();
+        candidat.Nom.Should().Be(nom);
+        candidat.DateEnregistrement.Should().Be(DateTime.Parse(dateEnregistrement));
     }
 
 

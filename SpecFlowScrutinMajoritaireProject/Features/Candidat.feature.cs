@@ -113,27 +113,34 @@ namespace SpecFlowScrutinMajoritaireProject.Features
 #line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "Id",
-                            "Nom"});
+                            "Nom",
+                            "DateEnregistrement"});
                 table1.AddRow(new string[] {
                             "1",
-                            "Candidat 1"});
+                            "Candidat 1",
+                            "2022-01-01 12:00:00 PM"});
                 table1.AddRow(new string[] {
                             "2",
-                            "Candidat 2"});
+                            "Candidat 2",
+                            "2022-01-01 12:01:00 PM"});
                 table1.AddRow(new string[] {
                             "3",
-                            "Candidat 3"});
+                            "Candidat 3",
+                            "2022-01-01 12:02:00 PM"});
 #line 5
         testRunner.When("j\'ajoute un candidat avec les informations suivantes :", ((string)(null)), table1, "When ");
 #line hidden
 #line 10
-        testRunner.Then("le candidat avec l\'identifiant 1 devrait avoir le nom \"Candidat 1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        testRunner.Then("le candidat avec l\'identifiant 1 devrait avoir le nom \"Candidat 1\" et la date d\'e" +
+                        "nregistrement 2022-01-01 12:00:00 PM", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 11
-        testRunner.And("le candidat avec l\'identifiant 2 devrait avoir le nom \"Candidat 2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.And("le candidat avec l\'identifiant 2 devrait avoir le nom \"Candidat 2\" et la date d\'e" +
+                        "nregistrement 2022-01-01 12:01:00 PM", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 12
-        testRunner.And("le candidat avec l\'identifiant 3 devrait avoir le nom \"Candidat 3\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.And("le candidat avec l\'identifiant 3 devrait avoir le nom \"Candidat 3\" et la date d\'e" +
+                        "nregistrement 2022-01-01 12:02:00 PM", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
