@@ -109,7 +109,7 @@ namespace SpecFlowScrutinMajoritaireProject.Features
             {
                 this.ScenarioStart();
 #line 4
-        testRunner.Given("un scrutin avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+        testRunner.Given("un scrutin avec l\'identifiant 1 est en premier tour", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
         testRunner.When("je consulte l\'état de clôture du scrutin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -151,7 +151,7 @@ namespace SpecFlowScrutinMajoritaireProject.Features
             {
                 this.ScenarioStart();
 #line 9
-        testRunner.Given("un scrutin avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+        testRunner.Given("un scrutin avec l\'identifiant 1 est en premier tour", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 10
         testRunner.And("un candidat avec l\'identifiant 1 et le nom \"Candidat 1\" et la date d\'enregistreme" +
@@ -178,14 +178,14 @@ namespace SpecFlowScrutinMajoritaireProject.Features
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Obtenir et afficher les résultats du scrutin")]
+        [Xunit.SkippableFactAttribute(DisplayName="Obtenir et afficher les résultats du scrutin en premier tour")]
         [Xunit.TraitAttribute("FeatureTitle", "Scrutin")]
-        [Xunit.TraitAttribute("Description", "Obtenir et afficher les résultats du scrutin")]
-        public virtual void ObtenirEtAfficherLesResultatsDuScrutin()
+        [Xunit.TraitAttribute("Description", "Obtenir et afficher les résultats du scrutin en premier tour")]
+        public virtual void ObtenirEtAfficherLesResultatsDuScrutinEnPremierTour()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Obtenir et afficher les résultats du scrutin", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Obtenir et afficher les résultats du scrutin en premier tour", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 17
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -207,7 +207,7 @@ namespace SpecFlowScrutinMajoritaireProject.Features
             {
                 this.ScenarioStart();
 #line 18
-        testRunner.Given("un scrutin avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+        testRunner.Given("un scrutin avec l\'identifiant 1 est en premier tour", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 19
         testRunner.And("un candidat avec l\'identifiant 1 et le nom \"Candidat 1\" et la date d\'enregistreme" +
@@ -224,10 +224,13 @@ namespace SpecFlowScrutinMajoritaireProject.Features
         testRunner.And("vote 1 fois pour le candidat avec l\'identifiant 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 23
+        testRunner.And("je clôture le scrutin avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 24
         testRunner.Then("les résultats du scrutin avec l\'identifiant 1 devraient être \"Candidat 1\" avec 95" +
                         ".65% des voix et \"Candidat 2\" avec 4.35% des voix", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 24
+#line 25
         testRunner.And("afficher les resultat \"Candidat 1 : 95.65%\\nCandidat 2 : 4.35%\\n\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
@@ -242,7 +245,7 @@ namespace SpecFlowScrutinMajoritaireProject.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Nous avons pas de candidat avec plus de 50% des voix", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 26
+#line 27
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -262,34 +265,34 @@ namespace SpecFlowScrutinMajoritaireProject.Features
             else
             {
                 this.ScenarioStart();
-#line 27
-        testRunner.Given("un scrutin avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
 #line 28
+        testRunner.Given("un scrutin avec l\'identifiant 1 est en premier tour", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 29
         testRunner.And("un candidat avec l\'identifiant 1 et le nom \"Candidat 1\" et la date d\'enregistreme" +
                         "nt 2022-01-01 12:00:00 PM", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 29
+#line 30
         testRunner.And("un candidat avec l\'identifiant 2 et le nom \"Candidat 2\" et la date d\'enregistreme" +
                         "nt 2022-01-01 12:02:00 PM", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 30
+#line 31
         testRunner.And("un candidat avec l\'identifiant 3 et le nom \"Candidat 3\" et la date d\'enregistreme" +
                         "nt 2022-01-01 12:03:00 PM", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 31
+#line 32
         testRunner.When("vote 25 fois pour le candidat avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 32
+#line 33
         testRunner.And("vote 30 fois pour le candidat avec l\'identifiant 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 33
+#line 34
         testRunner.And("vote 25 fois pour le candidat avec l\'identifiant 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 34
+#line 35
         testRunner.And("je clôture le scrutin avec l\'identifiant 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 35
+#line 36
         testRunner.Then("nous avons pas de candidat avec plus de 50% des voix les candidats pour second to" +
                         "ur sont \"Candidat 2\" et \"Candidat 1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

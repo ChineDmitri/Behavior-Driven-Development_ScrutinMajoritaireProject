@@ -4,7 +4,9 @@ public class Scrutin
 {
     public int Id { get; set; }
     public List<Candidat> Candidats { get; set; }
-    public bool estCloture { get; set; } = false;
+    public bool estCloture { get; private set; } = false;
+    public bool estSecondTour { get; private set; } = false;
+
 
     public Scrutin(int id)
     {
@@ -23,6 +25,11 @@ public class Scrutin
 
     public void Voter(int candidatId)
     {
+        if (estCloture)
+        {
+            throw new InvalidOperationException("Scrutin déjà cloturé");
+        }
+
         var candidat = Candidats.FirstOrDefault(c => c.Id == candidatId);
         if (candidat != null)
         {
@@ -30,62 +37,10 @@ public class Scrutin
         }
     }
 
-    public Candidat ObtenirVainqueurTT()
-    {
-        if (estCloture)
-        {
-            var resultats = Resultats();
-            var vainqueur = resultats.OrderByDescending(r => r.Value).FirstOrDefault().Key;
-
-            if (resultats[vainqueur] > 50)
-            {
-                Console.WriteLine($"{vainqueur.Nom} est déclaré vainqueur du scrutin.");
-                return vainqueur;
-            }
-
-            Console.WriteLine("Il n'y a pas de vainqueur clair. Un second tour est nécessaire.");
-        }
-
-        return null;
-    }
-
-    public List<Candidat> ObtenirVainqueurT()
-    {
-        if (estCloture)
-        {
-            var resultats = Resultats();
-            var vainqueurs = resultats.OrderByDescending(r => r.Value).ToList();
-
-            if (vainqueurs[0].Value > 50)
-            {
-                Console.WriteLine($"{vainqueurs[0].Key.Nom} est déclaré vainqueur du scrutin.");
-                return new List<Candidat> { vainqueurs[0].Key };
-            }
-            else
-            {
-                // Check for ties for the second and third place
-                if (vainqueurs.Count >= 3 && vainqueurs[1].Value == vainqueurs[2].Value)
-                {
-                    var tiedCandidates = vainqueurs.Skip(1).Take(2).Select(r => r.Key).ToList();
-                    var earliestRegisteredCandidate = tiedCandidates.OrderBy(c => c.DateEnregistrement).First();
-                    Console.WriteLine($"Il y a une égalité entre {tiedCandidates[0].Nom} et {tiedCandidates[1].Nom}. " +
-                                      $"Le vainqueur du second tour est {earliestRegisteredCandidate.Nom}.");
-                    return new List<Candidat> { earliestRegisteredCandidate };
-                }
-                else
-                {
-                    Console.WriteLine("Il n'y a pas de vainqueur clair. Un second tour est nécessaire.");
-                    return vainqueurs.Take(2).Select(r => r.Key).ToList();
-                }
-            }
-        }
-
-        return new List<Candidat>();
-    }
 
     public List<Candidat> ObtenirVainqueur()
     {
-        if (estCloture)
+        if (estCloture && !estSecondTour)
         {
             var resultats = Resultats();
             var vainqueurs = resultats.OrderByDescending(r => r.Value).ToList();
@@ -95,30 +50,52 @@ public class Scrutin
                 Console.WriteLine($"{vainqueurs[0].Key.Nom} est déclaré vainqueur du scrutin.");
                 return new List<Candidat> { vainqueurs[0].Key };
             }
-            else if (vainqueurs.Count == 2)
+
+            if (vainqueurs.Count == 2)
             {
-                Console.WriteLine("Il n'y a pas de vainqueur clair. Un second tour est nécessaire.");
-                return vainqueurs.Take(2).Select(r => r.Key).ToList();
+                Candidats = vainqueurs.Take(2).Select(r => r.Key).ToList();
+                DeclarerSecondTour();
+
+                return Candidats;
             }
-            else
+
+            if (vainqueurs[1].Value == vainqueurs[2].Value)
             {
-                Console.WriteLine("Il n'y a pas de vainqueur clair. Un second tour est nécessaire.");
-                if (vainqueurs[1].Value == vainqueurs[2].Value)
+                Candidats = new List<Candidat>
                 {
-                    return new List<Candidat>
-                    {
-                        vainqueurs[0].Key,
-                        vainqueurs[1].Key.DateEnregistrement < vainqueurs[2].Key.DateEnregistrement
-                            ? vainqueurs[1].Key
-                            : vainqueurs[2].Key
-                    };
-                }
+                    vainqueurs[0].Key,
+                    vainqueurs[1].Key.DateEnregistrement < vainqueurs[2].Key.DateEnregistrement
+                        ? vainqueurs[1].Key
+                        : vainqueurs[2].Key
+                };
+                DeclarerSecondTour();
 
-                return vainqueurs.Take(2).Select(r => r.Key).ToList();
+                return Candidats;
             }
-        }
 
-        return new List<Candidat>();
+            DeclarerSecondTour();
+            Candidats = vainqueurs.Take(2).Select(r => r.Key).ToList();
+            return Candidats;
+        }
+        else
+        {
+            var resultats = Resultats();
+            var vainqueurs = resultats.OrderByDescending(r => r.Value).ToList();
+
+            if (vainqueurs[0].Value == vainqueurs[1].Value)
+            {
+                Console.WriteLine("On ne peut pas déterminer un vainqueur clair dans le second tour.");
+                return new List<Candidat>();
+            }
+
+            if (vainqueurs[0].Value > vainqueurs[1].Value)
+            {
+                Console.WriteLine($"{vainqueurs[0].Key.Nom} est déclaré vainqueur du scrutin.");
+                return new List<Candidat> { vainqueurs[0].Key };
+            }
+
+            return new List<Candidat> { vainqueurs[1].Key };
+        }
     }
 
 
@@ -140,11 +117,41 @@ public class Scrutin
         return resultats;
     }
 
+    public void Cloture()
+    {
+        if (!estCloture)
+        {
+            estCloture = true;
+            afficherResultat();
+        }
+    }
+
+    public void DeclarerSecondTour()
+    {
+        if (!estSecondTour)
+        {
+            Console.WriteLine("Il n'y a pas de vainqueur clair. Un second tour est nécessaire.");
+            estSecondTour = true;
+            estCloture = false;
+            foreach (var candidat in Candidats)
+            {
+                candidat.RemettreVoixAZero();
+            }
+        }
+    }
+
     public void afficherResultat()
     {
-        foreach (var candidat in Resultats())
+        if (estCloture)
         {
-            Console.WriteLine($"{candidat.Key.Nom} : {candidat.Value}%");
+            foreach (var candidat in Resultats())
+            {
+                Console.WriteLine($"{candidat.Key.Nom} : {candidat.Value}%");
+            }
+        }
+        else
+        {
+            throw new InvalidOperationException("Scrutin non cloturé");
         }
     }
 }

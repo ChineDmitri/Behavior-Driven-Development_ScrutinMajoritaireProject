@@ -12,10 +12,11 @@ public class ScrutinStepDifinitions
     private bool _estCloture;
     private Candidat _vainqueur;
 
-    [Given(@"un scrutin avec l'identifiant (.*)")]
+    [Given(@"un scrutin avec l'identifiant (.*) est en premier tour")]
     public void GivenUnScrutinAvecLidentifiant(int idScrutin)
     {
         _scrutin = new Scrutin(idScrutin);
+        _scrutin.estSecondTour.Should().Be(false);
     }
 
     [When(@"je consulte l'état de clôture du scrutin")]
@@ -49,7 +50,8 @@ public class ScrutinStepDifinitions
     [When(@"je clôture le scrutin avec l'identifiant (.*)")]
     public void WhenJeClotureLeScrutinAvecLidentifiant(int idScrutin)
     {
-        _scrutin.estCloture = true;
+        _scrutin.Cloture();
+        _scrutin.estCloture.Should().Be(true);
     }
 
     [Then(@"le vainqueur du scrutin avec l'identifiant (.*) devrait être ""(.*)"" avec identifiant (.*)")]
@@ -101,9 +103,17 @@ public class ScrutinStepDifinitions
         string nomCandidat1,
         string nomCandidat2)
     {
-        List<Candidat> _vainqueur = _scrutin.ObtenirVainqueur();
+        List<Candidat>? _vainqueur = _scrutin.ObtenirVainqueur();
         _vainqueur.Count.Should().Be(2);
         _vainqueur[0].Nom.Should().Be(nomCandidat1);
         _vainqueur[1].Nom.Should().Be(nomCandidat2);
+    }
+
+    [Given(@"un scrutin avec l'identifiant (.*) est en second tour")]
+    public void GivenUnScrutinAvecLidentifiantEstEnSecondTour(int p0)
+    {
+        // ScenarioContext.StepIsPending();
+        // _scrutin.estSecondTour.Should().Be(true);
+        _scrutin.estSecondTour.Should().Be(true);
     }
 }

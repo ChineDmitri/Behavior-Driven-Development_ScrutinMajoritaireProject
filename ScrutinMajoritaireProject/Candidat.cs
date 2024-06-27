@@ -17,14 +17,19 @@ public class Candidat
         Id = id;
         Nom = nom;
         NombreDeVoix = 0;
-        DateEnregistrement = dateEnregistrement; 
+        DateEnregistrement = dateEnregistrement;
     }
-    
+
     public Candidat(int id, string nom)
     {
         Id = id;
         Nom = nom;
         NombreDeVoix = 0;
-        DateEnregistrement = DateTime.Now; 
+        DateEnregistrement = DateTime.Now;
+    }
+
+    public void RemettreVoixAZero()
+    {
+        NombreDeVoix = 0;
     }
 }
