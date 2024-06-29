@@ -42,7 +42,7 @@ public class Scrutin
     {
         if (estCloture && !estSecondTour)
         {
-            var resultats = Resultats();
+            var resultats = ResultatsParIdCandidat();
             var vainqueurs = resultats.OrderByDescending(r => r.Value).ToList();
 
             if (vainqueurs[0].Value > 50)
@@ -51,9 +51,14 @@ public class Scrutin
                 return new List<Candidat> { vainqueurs[0].Key };
             }
 
-            if (vainqueurs.Count == 2)
+            bool estTousGagnantsPourcentagesEgaux = vainqueurs.All(v => v.Value == vainqueurs[0].Value);
+            if (estTousGagnantsPourcentagesEgaux)
             {
-                Candidats = vainqueurs.Take(2).Select(r => r.Key).ToList();
+                Candidats = Candidats.OrderBy(
+                        c => c.DateEnregistrement
+                    )
+                    .Take(2)
+                    .ToList();
                 DeclarerSecondTour();
 
                 return Candidats;
@@ -79,22 +84,22 @@ public class Scrutin
         }
         else
         {
-            var resultats = Resultats();
-            var vainqueurs = resultats.OrderByDescending(r => r.Value).ToList();
+            var resultats = ResultatsParIdCandidat();
+            // var vainqueurs = resultats.OrderBy(r => r.Key.Id).ToList();
 
-            if (vainqueurs[0].Value == vainqueurs[1].Value)
+            if (Candidats[0].NombreDeVoix == Candidats[1].NombreDeVoix)
             {
                 Console.WriteLine("On ne peut pas déterminer un vainqueur clair dans le second tour.");
-                return new List<Candidat>();
+                return Candidats;
             }
 
-            if (vainqueurs[0].Value > vainqueurs[1].Value)
+            if (Candidats[0].NombreDeVoix > Candidats[1].NombreDeVoix)
             {
-                Console.WriteLine($"{vainqueurs[0].Key.Nom} est déclaré vainqueur du scrutin.");
-                return new List<Candidat> { vainqueurs[0].Key };
+                Console.WriteLine($"{Candidats[0].Nom} est déclaré vainqueur du scrutin.");
+                return new List<Candidat> { Candidats[0] };
             }
 
-            return new List<Candidat> { vainqueurs[1].Key };
+            return new List<Candidat> { Candidats[1] };
         }
     }
 
@@ -104,11 +109,12 @@ public class Scrutin
         return Candidats.Sum(c => c.NombreDeVoix);
     }
 
-    public Dictionary<Candidat, double> Resultats()
+    public Dictionary<Candidat, double> ResultatsParIdCandidat()
     {
         var totalVotes = TotalVotes();
+
         var resultats = new Dictionary<Candidat, double>();
-        foreach (var candidat in Candidats)
+        foreach (var candidat in Candidats.OrderBy(c => c.Id))
         {
             double pourcentage = (double)candidat.NombreDeVoix / totalVotes * 100;
             resultats.Add(candidat, Math.Round(pourcentage, 2));
@@ -144,7 +150,7 @@ public class Scrutin
     {
         if (estCloture)
         {
-            foreach (var candidat in Resultats())
+            foreach (var candidat in ResultatsParIdCandidat())
             {
                 Console.WriteLine($"{candidat.Key.Nom} : {candidat.Value}%");
             }
