@@ -178,6 +178,7 @@ public class ScrutinStepDifinitions
             .And
             .Match<Candidat>(c => c.Nom == nomCandidat2);
         vainqueur[0].NombreDeVoix.Should().Be(vainqueur[1].NombreDeVoix);
+        _scrutin.vainqueur.Should().BeNull();
     }
 
     [Then(@"obtient une erreur ""(.*)"" lorque vote (.*) fois pour le candidat avec l'identifiant (.*)")]
@@ -195,5 +196,18 @@ public class ScrutinStepDifinitions
 
             Assert.Equal(e.Message, actuelMsgError);
         }
+    }
+
+    [Then(@"obtient une erreur ""(.*)"" lorque je demande les résultats du scrutin avec l'identifiant (.*)")]
+    public void ThenObtientUneErreurLorqueJeDemandeLesResultatsDuScrutinAvecLidentifiant(string messageErreur,
+        int idScrutin)
+    {
+        _scrutin.Id.Should().Be(idScrutin);
+
+        Exception e = Assert.Throws<InvalidOperationException>(
+            () => _scrutin.ObtenirVainqueur()
+        );
+
+        Assert.Equal(e.Message, messageErreur);
     }
 }

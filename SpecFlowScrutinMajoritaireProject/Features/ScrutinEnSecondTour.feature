@@ -10,7 +10,7 @@ Feature: ScrutinEnSecondTour
         And vote 25 fois pour le candidat avec l'identifiant 3
         And je clôture le scrutin avec l'identifiant 1
         # affichager de console fontion que sur test unique
-        # And afficher les resultat "Candidat 1 : 31.25%\nCandidat 2 : 37.5%\nCandidat 3 : 31.25%\n"
+        # And afficher les resultat "Candidat 1 : 25 voix (31.25%)\nCandidat 2 : 30 voix (37.5%)\nCandidat 3 : 25 voix (31.25%)\n"
         Then nous avons pas de candidat avec plus de 50% des voix les candidats pour second tour sont "Candidat 2" et "Candidat 1"
 
     Scenario: Un candidat obtient plus de 50% des voix en second tour
@@ -20,7 +20,7 @@ Feature: ScrutinEnSecondTour
         And vote 30 fois pour le candidat avec l'identifiant 2
         And je clôture le scrutin avec l'identifiant 1
         # affichager de console fontion que sur test unique
-        # And afficher les resultat "Candidat 1 : 45.45%\nCandidat 2 : 54.55%\n"
+        # And afficher les resultat "Candidat 1 : 25 voix (45.45%)\nCandidat 2 : 30 voix (54.55%)\n"
         Then le candidat avec l'identifiant 2 a gagné le scrutin avec 30 des voix
 
     Scenario: Deux candidats ont le même nombre de voix en second tour
@@ -30,5 +30,5 @@ Feature: ScrutinEnSecondTour
         And vote 25 fois pour le candidat avec l'identifiant 2
         And je clôture le scrutin avec l'identifiant 1
         # affichager de console fontion que sur test unique
-        # And afficher les resultat "Candidat 1 : 50%\nCandidat 2 : 50%\n"
+        # And afficher les resultat "Candidat 1 : 25 voix (50%)\nCandidat 2 : 25 voix (50%)\n"
         Then nous avons une égalité entre les deux candidats "Candidat 2" et "Candidat 1"
